@@ -3,11 +3,14 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
+
 const moment = require('moment-timezone');
 const { createDocument, getAllDocuments, deleteDocument } = require('./mongo.js');
 
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const getWeatherDetailsFromTomorrowio = async (lat, long) => {
@@ -103,11 +106,11 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
 app.post("/add-favorite", async (req, res) => {
-    const {city, state} = req.body;
+    const { city, state } = req.body;
     try {
         await createDocument(state, city);
         res.sendStatus(201);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(500);
     }
@@ -124,17 +127,33 @@ app.get("/get-favorites", async (req, res) => {
 })
 
 app.post("/delete-favorite", async (req, res) => {
-    const {city, state} = req.body;
+    const { city, state } = req.body;
     try {
         await deleteDocument(state, city);
         res.sendStatus(200);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(500);
     }
 })
 
-const port = 3000;
+app.get("/autocomplete", async (req, res) => {
+    try {
+        const { input } = req.query;
+        let config = {
+            method: 'get',
+            url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&components=country:us&key=AIzaSyAC7C6mxFDHWh9YCNTIjAvP_7GenOIjh1g&types=%28cities%29`,
+        };
+
+        let response = await axios.request(config);
+        res.json(response.data);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+})
+
+const port = 8080;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
