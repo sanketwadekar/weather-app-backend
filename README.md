@@ -10,10 +10,15 @@
 - IPinfo (for auto-detecting location)
 
 ## Features:
-- This is a mobile friendly weather app that displays weather forecast of a location using Tomorrow.io's weather API.
-- Displays interactive charts that display lowest/highest temperature, humidity, wind direction, for the next 6 days.
+- This is a mobile-friendly weather app that displays the weather forecast of a location using Tomorrow.io's weather API.
+- Displays interactive charts that display the lowest/highest temperature, humidity, and wind direction for the next 6 days.
 - Integrated Google Cloud's Autocomplete API to show suggestions for cities.
-- User can enter the location details manually or select auto-detect to detect the location using IP address information.
-- Used Google Cloud's Geolocation API to get the location co-ordinates of an address.
-- User can mark favorite cities and retrieve their weather information.
-- Added option to share the weather information on X.
+- Users can enter the location details manually or select auto-detect to detect the location using IP address information.
+- I used Google Cloud's Geolocation API to get the location coordinates of an address.
+- User can mark their favorite cities and retrieve their weather information.
+- I added the option to share the weather information on X.
+
+
+## Demo
+
+https://github.com/user-attachments/assets/d323b93e-9e48-4937-aa49-b0b6dad4b890
